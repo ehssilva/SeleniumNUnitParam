@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
@@ -34,7 +35,13 @@ namespace SeleniumNUnitParam
         private void ChooseDriverInstance(BrowerType browserType)
         {
             if (browserType == BrowerType.Chrome)
-                Driver = new ChromeDriver();
+            {
+                var options = new ChromeOptions();
+                options.SetLoggingPreference(LogType.Driver, LogLevel.All);
+                options.AddAdditionalCapability("useAutomationExtension", false);
+                options.AddArguments("--no-sandbox");
+                Driver = new ChromeDriver(options);
+            }
             else if (browserType == BrowerType.Firefox)
             {
                 FirefoxDriverService service = FirefoxDriverService.CreateDefaultService();
@@ -43,7 +50,7 @@ namespace SeleniumNUnitParam
                 service.SuppressInitialDiagnosticInformation = true;
                 Driver = new FirefoxDriver(service);
             }
-            else if(browserType == BrowerType.IE)
+            else if (browserType == BrowerType.IE)
             {
                 Driver = new InternetExplorerDriver();
             }
