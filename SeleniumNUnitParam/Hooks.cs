@@ -36,11 +36,7 @@ namespace SeleniumNUnitParam
         {
             if (browserType == BrowerType.Chrome)
             {
-                var options = new ChromeOptions();
-                options.AddArguments("--whitelisted-ips='*'");
-                options.SetLoggingPreference(LogType.Driver, LogLevel.All);
-                options.AddAdditionalCapability("useAutomationExtension", false);
-                options.AddArguments("--no-sandbox");
+                var options = new ChromeOptions();                
                 Driver = new ChromeDriver(options);
             }
             else if (browserType == BrowerType.Firefox)
